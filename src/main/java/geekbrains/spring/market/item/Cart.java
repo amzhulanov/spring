@@ -1,7 +1,10 @@
 package geekbrains.spring.market.item;
 
+import org.springframework.stereotype.Component;
+
 import java.math.BigDecimal;
 
+@Component
 public class Cart {
     private Long id;
     private Long idProduct;
