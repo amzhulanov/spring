@@ -3,6 +3,7 @@ package geekbrains.spring.market.repository;
 
 import geekbrains.spring.market.item.Cart;
 import geekbrains.spring.market.item.Product;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
@@ -14,7 +15,6 @@ import java.util.List;
 @Repository
 public class ProductRepository {
     private List<Product> products;
-    private List<Cart> carts;
 
     @PostConstruct
     public void init() {
@@ -28,16 +28,12 @@ public class ProductRepository {
         return Collections.unmodifiableList(products);
     }
 
-    public List<Cart> getAllCarts() {
-        return Collections.unmodifiableList(carts);
-    }
-
-    public void insert(Product product) {
-        products.add(product);
-    }
-
-    public void insert_cart(Long id, Product product) {
-        carts = new ArrayList<>();
-        carts.add(new Cart(id, product.getId(), product.getPrice()));
+    public Product findByOneId (Long id){
+        for (Product item : products) {
+            if (item.getId().equals(id)) {
+                return item;
+            }
+        }
+        return null;
     }
 }

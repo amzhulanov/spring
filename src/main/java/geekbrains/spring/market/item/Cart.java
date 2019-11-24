@@ -1,51 +1,33 @@
 package geekbrains.spring.market.item;
 
+import geekbrains.spring.market.services.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Component
 public class Cart {
-    private Long id;
-    private Long idProduct;
-    private BigDecimal price;
+    ProductService productService;
+    private List<Product> cart = new ArrayList<>();
+//    private Long id;
+//    private Long idProduct;
+//    private BigDecimal price;
 
-    public Long getId() {
-        return id;
+
+    @Autowired
+    public void setProductService(ProductService productService) {
+        this.productService = productService;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void addCart(Long id) {
+        cart.add(productService.findByOneId(id));
     }
 
-    public Long getIdProduct() {
-        return idProduct;
-    }
-
-    public void setIdProduct(Long idProduct) {
-        this.idProduct = idProduct;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public Cart(Long id, Long idProduct, BigDecimal price) {
-        this.id = id;
-        this.idProduct = idProduct;
-        this.price = price;
-    }
-
-    @Override
-    public String toString() {
-        return "Cart{" +
-                "id=" + id +
-                ", idProduct=" + idProduct +
-                ", price=" + price +
-                '}';
+    public List<Product> getAllCart() {
+        return Collections.unmodifiableList(cart);
     }
 }
